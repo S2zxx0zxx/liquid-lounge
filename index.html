@@ -675,25 +675,22 @@ footer{background:var(--dark);padding:64px 60px 40px;}
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false">
 // LOADER
-// Force hide loader after 2 seconds max
-setTimeout(function() {
+function hideLoader() {
   var loader = document.getElementById('loader');
   if (loader) {
     loader.style.opacity = '0';
     loader.style.visibility = 'hidden';
+    loader.style.pointerEvents = 'none';
   }
-}, 1500);
-
-// Also on window load
-window.addEventListener('load', function() {
-  var loader = document.getElementById('loader');
-  if (loader) {
-    loader.style.opacity = '0';
-    loader.style.visibility = 'hidden';
-  }
-});
+}
+// Hide as soon as DOM is ready
+document.addEventListener('DOMContentLoaded', hideLoader);
+// Also hide on full window load
+window.addEventListener('load', hideLoader);
+// Hard cap: never stay stuck beyond 800 ms
+setTimeout(hideLoader, 800);
 
 // PARTICLES
 (function(){const c=document.getElementById('pts');for(let i=0;i<14;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*2+.8;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*8}s;`;c.appendChild(p);}})();
