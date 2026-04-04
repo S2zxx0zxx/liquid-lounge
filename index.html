@@ -677,7 +677,23 @@ footer{background:var(--dark);padding:64px 60px 40px;}
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // LOADER
-window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('out'),1100);});
+// Force hide loader after 2 seconds max
+setTimeout(function() {
+  var loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.visibility = 'hidden';
+  }
+}, 1500);
+
+// Also on window load
+window.addEventListener('load', function() {
+  var loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.visibility = 'hidden';
+  }
+});
 
 // PARTICLES
 (function(){const c=document.getElementById('pts');for(let i=0;i<14;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*2+.8;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*8}s;`;c.appendChild(p);}})();
