@@ -862,30 +862,104 @@ function vf(el,type){
 }
 </script>
 
-<div id="pwa-install-popup" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1208;border:1px solid #b8892a;color:#fff;padding:18px 28px;border-radius:14px;z-index:99999;text-align:center;font-family:inherit;box-shadow:0 6px 32px rgba(0,0,0,0.6);min-width:280px;">
-  <p style="margin:0 0 14px;font-size:15px;line-height:1.4;">Install <strong style="color:#b8892a;">The Liquid Lounge</strong><br>app for the best experience!</p>
-  <button id="pwa-install-btn" style="background:#b8892a;color:#1a1208;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;margin-right:8px;">Install</button>
-  <button id="pwa-dismiss-btn" style="background:transparent;color:#b8892a;border:1px solid #b8892a;padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;">Not now</button>
+<div id="pwa-popup" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1208;border:1px solid #b8892a;color:#fff;padding:20px 28px 18px;border-radius:14px;z-index:99999;text-align:center;font-family:inherit;box-shadow:0 6px 32px rgba(0,0,0,0.7);min-width:290px;max-width:92vw;">
+  <p id="pwa-popup-msg" style="margin:0 0 6px;font-size:15px;line-height:1.5;">Install <strong style="color:#b8892a;">The Liquid Lounge</strong><br>app for the best experience!</p>
+  <p id="pwa-popup-steps" style="display:none;margin:0 0 12px;font-size:13px;line-height:1.6;color:#e8d5a3;"></p>
+  <div id="pwa-popup-btns" style="margin-top:14px;">
+    <button id="pwa-install-btn" style="display:none;background:#b8892a;color:#1a1208;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;margin-right:8px;">Install</button>
+    <button id="pwa-dismiss-btn" style="background:transparent;color:#b8892a;border:1px solid #b8892a;padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;">Not now</button>
+  </div>
 </div>
 
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}
 (function(){
-  var deferredPrompt;
-  var popup=document.getElementById('pwa-install-popup');
+  var DISMISS_KEY='pwa_dismissed_until';
+  var THREE_DAYS=3*24*60*60*1000;
+  var PROMPT_FALLBACK_DELAY=3000;
+  var popup=document.getElementById('pwa-popup');
+  var msg=document.getElementById('pwa-popup-msg');
+  var steps=document.getElementById('pwa-popup-steps');
   var installBtn=document.getElementById('pwa-install-btn');
   var dismissBtn=document.getElementById('pwa-dismiss-btn');
-  window.addEventListener('beforeinstallprompt',function(e){
-    e.preventDefault();
-    deferredPrompt=e;
+  var deferredPrompt=null;
+
+  function dismiss(){
+    popup.style.display='none';
+    try{localStorage.setItem(DISMISS_KEY,Date.now()+THREE_DAYS);}catch(e){}
+  }
+
+  function isDismissed(){
+    try{var v=localStorage.getItem(DISMISS_KEY);return v&&Date.now()<parseInt(v,10);}catch(e){return false;}
+  }
+
+  function isInstalled(){
+    return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  }
+
+  function getBrowser(){
+    var ua=navigator.userAgent;
+    if(/SamsungBrowser/i.test(ua))return 'samsung';
+    if(/OPR|Opera/i.test(ua))return 'opera';
+    if(/Firefox/i.test(ua))return 'firefox';
+    if(/iPhone|iPad|iPod/i.test(ua)&&/Safari/i.test(ua)&&!/Chrome/i.test(ua))return 'ios';
+    if(/Edg\//i.test(ua))return 'edge';
+    if(/Chrome/i.test(ua))return 'chrome';
+    return 'other';
+  }
+
+  function getManualSteps(browser){
+    if(browser==='samsung')return 'Tap the <strong style="color:#b8892a;">⋮ menu</strong> in Samsung Browser,<br>then select <strong style="color:#b8892a;">Add page to</strong> → <strong style="color:#b8892a;">Home screen</strong>.';
+    if(browser==='ios')return 'Tap the <strong style="color:#b8892a;">Share ⬆</strong> button at the bottom,<br>then choose <strong style="color:#b8892a;">Add to Home Screen</strong>.';
+    if(browser==='opera')return 'Tap the <strong style="color:#b8892a;">⋮ menu</strong>, then select<br><strong style="color:#b8892a;">Add to home screen</strong>.';
+    if(browser==='firefox')return 'Tap the <strong style="color:#b8892a;">⋮ menu</strong>, then select<br><strong style="color:#b8892a;">Install</strong> or <strong style="color:#b8892a;">Add to Home screen</strong>.';
+    return 'Open your <strong style="color:#b8892a;">browser menu</strong> (⋮ or ⊞),<br>then tap <strong style="color:#b8892a;">Add to Home screen</strong>.';
+  }
+
+  function showManualSteps(browser){
+    steps.innerHTML=getManualSteps(browser);
+    steps.style.display='block';
+    msg.style.marginBottom='0';
     popup.style.display='block';
-  });
+  }
+
+  function showPopup(){
+    if(isDismissed()||isInstalled())return;
+    var browser=getBrowser();
+
+    window.addEventListener('beforeinstallprompt',function(e){
+      e.preventDefault();
+      deferredPrompt=e;
+      installBtn.style.display='inline-block';
+      popup.style.display='block';
+    });
+
+    if(browser==='chrome'||browser==='edge'){
+      // Show popup only after beforeinstallprompt fires (handled above).
+      // Fallback after PROMPT_FALLBACK_DELAY: show manual steps if native prompt never arrives.
+      setTimeout(function(){
+        if(!deferredPrompt&&!isInstalled()&&!isDismissed()){showManualSteps(browser);}
+      },PROMPT_FALLBACK_DELAY);
+    } else {
+      // Samsung, Realme, iOS, Firefox, Opera and all other browsers: show manual steps immediately.
+      showManualSteps(browser);
+    }
+  }
+
   installBtn.addEventListener('click',function(){
     popup.style.display='none';
-    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});}
+    if(deferredPrompt){
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(c){
+        if(c.outcome==='accepted'){try{localStorage.setItem(DISMISS_KEY,Date.now()+THREE_DAYS);}catch(e){}}
+        deferredPrompt=null;
+      });
+    }
   });
-  dismissBtn.addEventListener('click',function(){popup.style.display='none';});
-  window.addEventListener('appinstalled',function(){popup.style.display='none';deferredPrompt=null;});
+  dismissBtn.addEventListener('click',dismiss);
+  window.addEventListener('appinstalled',function(){popup.style.display='none';deferredPrompt=null;try{localStorage.setItem(DISMISS_KEY,Date.now()+THREE_DAYS);}catch(e){}});
+
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',showPopup);}else{showPopup();}
 })();
 </script>
 </body>
