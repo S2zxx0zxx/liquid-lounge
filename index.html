@@ -851,4 +851,9 @@ function sub(){
   [1,2,3].forEach(i=>document.getElementById('si'+i).classList.add('d'));
 }
 function vf(el,type){
-  if(type==='n')el.value.trim().length>1?el.classList.add('v'):el.classLi
+  if(type==='n'){el.value.trim().length>1?el.classList.add('v'):el.classList.remove('v');}
+  if(type==='p'){/^[0-9+\s\-]{7,15}$/.test(el.value.trim())?el.classList.add('v'):el.classList.remove('v');}
+}
+</script>
+</body>
+</html>
