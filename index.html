@@ -413,6 +413,12 @@ footer{background:var(--dark);padding:64px 60px 40px;}
   .swg-tab{font-size:9px;padding:10px 6px;}
 }
 </style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#b8892a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Liquid Lounge">
+<link rel="apple-touch-icon" href="/icons/icon-152.png">
 </head>
 <body>
 
@@ -854,6 +860,33 @@ function vf(el,type){
   if(type==='n'){el.value.trim().length>1?el.classList.add('v'):el.classList.remove('v');}
   if(type==='p'){/^[0-9+\s\-]{7,15}$/.test(el.value.trim())?el.classList.add('v'):el.classList.remove('v');}
 }
+</script>
+
+<div id="pwa-install-popup" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1208;border:1px solid #b8892a;color:#fff;padding:18px 28px;border-radius:14px;z-index:99999;text-align:center;font-family:inherit;box-shadow:0 6px 32px rgba(0,0,0,0.6);min-width:280px;">
+  <p style="margin:0 0 14px;font-size:15px;line-height:1.4;">Install <strong style="color:#b8892a;">The Liquid Lounge</strong><br>app for the best experience!</p>
+  <button id="pwa-install-btn" style="background:#b8892a;color:#1a1208;border:none;padding:10px 22px;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;margin-right:8px;">Install</button>
+  <button id="pwa-dismiss-btn" style="background:transparent;color:#b8892a;border:1px solid #b8892a;padding:10px 22px;border-radius:8px;font-size:14px;cursor:pointer;">Not now</button>
+</div>
+
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
+(function(){
+  var deferredPrompt;
+  var popup=document.getElementById('pwa-install-popup');
+  var installBtn=document.getElementById('pwa-install-btn');
+  var dismissBtn=document.getElementById('pwa-dismiss-btn');
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    deferredPrompt=e;
+    popup.style.display='block';
+  });
+  installBtn.addEventListener('click',function(){
+    popup.style.display='none';
+    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;});}
+  });
+  dismissBtn.addEventListener('click',function(){popup.style.display='none';});
+  window.addEventListener('appinstalled',function(){popup.style.display='none';deferredPrompt=null;});
+})();
 </script>
 </body>
 </html>
