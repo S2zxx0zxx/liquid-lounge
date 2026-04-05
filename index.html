@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://connect.facebook.net">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<meta http-equiv="Cache-Control" content="max-age=31536000">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="The Liquid Lounge — Premium bar &amp; dining on the highway. Crafted cocktails, great food, DJ nights. Reserve your table today."/>
   <link rel="canonical" href="https://theliquidlounge.in"/>
@@ -12,7 +20,8 @@
   <meta property="og:url" content="https://theliquidlounge.in"/>
   <meta property="og:type" content="website"/>
 <title>The Liquid Lounge — Fine Drinks & Dining | v2.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap"></noscript>
 <style>
 :root{
   --gold:#b8892a;
@@ -419,27 +428,6 @@ footer{background:var(--dark);padding:64px 60px 40px;}
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Liquid Lounge">
 <link rel="apple-touch-icon" href="/icons/icon-152.png">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N7C8LZ5KX8"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-N7C8LZ5KX8');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1303788181629813');
-fbq('track','PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1303788181629813&ev=PageView&noscript=1"/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -447,7 +435,7 @@ src="https://www.facebook.com/tr?id=1303788181629813&ev=PageView&noscript=1"/></
 
 <!-- LOADER -->
 <div id="loader">
-  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiBmaWxsPSJub25lIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4Yzk3YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhMDc4MzAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gR2xhc3MgYm9keSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMwLDE4IDkwLDE4IDY4LDYyIDUyLDYyIiBmaWxsPSJ1cmwoI2cxKSIgb3BhY2l0eT0iMC45NSIvPgogIDwhLS0gR2xhc3Mgc3RlbSAtLT4KICA8cmVjdCB4PSI1NSIgeT0iNjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGZpbGw9InVybCgjZzEpIi8+CiAgPCEtLSBHbGFzcyBiYXNlIC0tPgogIDxyZWN0IHg9IjQwIiB5PSI4OCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2cxKSIvPgogIDwhLS0gTGlxdWlkIGRyb3AgLS0+CiAgPHBhdGggZD0iTTYwIDM4IEM2MCAzOCA0OCA1MiA0OCA2MCBDNDggNjYuNiA1My40IDcyIDYwIDcyIEM2Ni42IDcyIDcyIDY2LjYgNzIgNjAgQzcyIDUyIDYwIDM4IDYwIDM4WiIgZmlsbD0iIzFhMTIwOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gTCBsZXR0ZXIgLS0+CiAgPHRleHQgeD0iNTQiIHk9IjY3IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9InVybCgjZzEpIj5MPC90ZXh0PgogIDwhLS0gVG9wIHJpbSBsaW5lIC0tPgogIDxsaW5lIHgxPSIyOCIgeTE9IjE4IiB4Mj0iOTIiIHkyPSIxOCIgc3Ryb2tlPSJ1cmwoI2cxKSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="TLL" style="height:72px;width:auto;animation:lp 1.4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.45));"/>
+  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiBmaWxsPSJub25lIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4Yzk3YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhMDc4MzAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gR2xhc3MgYm9keSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMwLDE4IDkwLDE4IDY4LDYyIDUyLDYyIiBmaWxsPSJ1cmwoI2cxKSIgb3BhY2l0eT0iMC45NSIvPgogIDwhLS0gR2xhc3Mgc3RlbSAtLT4KICA8cmVjdCB4PSI1NSIgeT0iNjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGZpbGw9InVybCgjZzEpIi8+CiAgPCEtLSBHbGFzcyBiYXNlIC0tPgogIDxyZWN0IHg9IjQwIiB5PSI4OCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2cxKSIvPgogIDwhLS0gTGlxdWlkIGRyb3AgLS0+CiAgPHBhdGggZD0iTTYwIDM4IEM2MCAzOCA0OCA1MiA0OCA2MCBDNDggNjYuNiA1My40IDcyIDYwIDcyIEM2Ni42IDcyIDcyIDY2LjYgNzIgNjAgQzcyIDUyIDYwIDM4IDYwIDM4WiIgZmlsbD0iIzFhMTIwOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gTCBsZXR0ZXIgLS0+CiAgPHRleHQgeD0iNTQiIHk9IjY3IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9InVybCgjZzEpIj5MPC90ZXh0PgogIDwhLS0gVG9wIHJpbSBsaW5lIC0tPgogIDxsaW5lIHgxPSIyOCIgeTE9IjE4IiB4Mj0iOTIiIHkyPSIxOCIgc3Ryb2tlPSJ1cmwoI2cxKSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="TLL" style="height:72px;width:auto;animation:lp 1.4s ease-in-out infinite;filter:drop-shadow(0 0 16px rgba(201,168,76,0.45));" fetchpriority="high"/>
   <div class="ld-bar"></div>
   <div class="ld-sub">Fine Drinks &amp; Dining</div>
 </div>
@@ -731,7 +719,7 @@ src="https://www.facebook.com/tr?id=1303788181629813&ev=PageView&noscript=1"/></
   <div class="ft-m">
     <div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiBmaWxsPSJub25lIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4Yzk3YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhMDc4MzAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gR2xhc3MgYm9keSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMwLDE4IDkwLDE4IDY4LDYyIDUyLDYyIiBmaWxsPSJ1cmwoI2cxKSIgb3BhY2l0eT0iMC45NSIvPgogIDwhLS0gR2xhc3Mgc3RlbSAtLT4KICA8cmVjdCB4PSI1NSIgeT0iNjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGZpbGw9InVybCgjZzEpIi8+CiAgPCEtLSBHbGFzcyBiYXNlIC0tPgogIDxyZWN0IHg9IjQwIiB5PSI4OCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2cxKSIvPgogIDwhLS0gTGlxdWlkIGRyb3AgLS0+CiAgPHBhdGggZD0iTTYwIDM4IEM2MCAzOCA0OCA1MiA0OCA2MCBDNDggNjYuNiA1My40IDcyIDYwIDcyIEM2Ni42IDcyIDcyIDY2LjYgNzIgNjAgQzcyIDUyIDYwIDM4IDYwIDM4WiIgZmlsbD0iIzFhMTIwOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gTCBsZXR0ZXIgLS0+CiAgPHRleHQgeD0iNTQiIHk9IjY3IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9InVybCgjZzEpIj5MPC90ZXh0PgogIDwhLS0gVG9wIHJpbSBsaW5lIC0tPgogIDxsaW5lIHgxPSIyOCIgeTE9IjE4IiB4Mj0iOTIiIHkyPSIxOCIgc3Ryb2tlPSJ1cmwoI2cxKSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="TLL" style="height:52px;width:auto;filter:brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) drop-shadow(0 0 10px rgba(201,168,76,0.5));"/>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiBmaWxsPSJub25lIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4Yzk3YSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhMDc4MzAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gR2xhc3MgYm9keSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMwLDE4IDkwLDE4IDY4LDYyIDUyLDYyIiBmaWxsPSJ1cmwoI2cxKSIgb3BhY2l0eT0iMC45NSIvPgogIDwhLS0gR2xhc3Mgc3RlbSAtLT4KICA8cmVjdCB4PSI1NSIgeT0iNjIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGZpbGw9InVybCgjZzEpIi8+CiAgPCEtLSBHbGFzcyBiYXNlIC0tPgogIDxyZWN0IHg9IjQwIiB5PSI4OCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2cxKSIvPgogIDwhLS0gTGlxdWlkIGRyb3AgLS0+CiAgPHBhdGggZD0iTTYwIDM4IEM2MCAzOCA0OCA1MiA0OCA2MCBDNDggNjYuNiA1My40IDcyIDYwIDcyIEM2Ni42IDcyIDcyIDY2LjYgNzIgNjAgQzcyIDUyIDYwIDM4IDYwIDM4WiIgZmlsbD0iIzFhMTIwOCIgb3BhY2l0eT0iMC44NSIvPgogIDwhLS0gTCBsZXR0ZXIgLS0+CiAgPHRleHQgeD0iNTQiIHk9IjY3IiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9InVybCgjZzEpIj5MPC90ZXh0PgogIDwhLS0gVG9wIHJpbSBsaW5lIC0tPgogIDxsaW5lIHgxPSIyOCIgeTE9IjE4IiB4Mj0iOTIiIHkyPSIxOCIgc3Ryb2tlPSJ1cmwoI2cxKSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="TLL" style="height:52px;width:auto;filter:brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) drop-shadow(0 0 10px rgba(201,168,76,0.5));" loading="lazy"/>
         <div>
           <div class="ft-lo">The Liquid Lounge</div>
           <div class="ft-tg">Where Every Evening Becomes a Memory</div>
@@ -765,19 +753,19 @@ src="https://www.facebook.com/tr?id=1303788181629813&ev=PageView&noscript=1"/></
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" defer src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // LOADER
-function hideLoader() {
-  var loader = document.getElementById('loader');
+const hideLoader = () => {
+  const loader = document.getElementById('loader');
   // Set min date for reservation to today
-  (function(){var fd=document.getElementById('fd');if(fd)fd.min=new Date().toISOString().split('T')[0];})();
+  (()=>{const fd=document.getElementById('fd');if(fd)fd.min=new Date().toISOString().split('T')[0];})();
   if (loader) {
     loader.style.opacity = '0';
     loader.style.visibility = 'hidden';
     loader.style.pointerEvents = 'none';
     loader.style.animationName = 'none';
   }
-}
+};
 // If DOM already loaded (script was deferred past DOMContentLoaded), call immediately
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', hideLoader);
@@ -802,36 +790,38 @@ document.querySelectorAll('a,button,.m-card,.ev-card,.gi').forEach(el=>{el.addEv
 
 // SCROLL
 const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
-  document.getElementById('pb').style.width=pct+'%';
-  nav.classList.toggle('sc',window.scrollY>60);
-  // Fix floating labels on select elements
-  document.querySelectorAll('.fg select').forEach(function(sel){
-    sel.addEventListener('change',function(){
-      this.classList.toggle('has-val',this.value!=='');
-    });
+// Fix floating labels on select elements (attach once)
+document.querySelectorAll('.fg select').forEach(function(sel){
+  sel.addEventListener('change',function(){
+    this.classList.toggle('has-val',this.value!=='');
   });
-  let cu='';['menu','gallery','events','reservation','contact'].forEach(id=>{const s=document.getElementById(id);if(s&&window.scrollY>=s.offsetTop-130)cu=id;});
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.s===cu));
+});
+window.addEventListener('scroll',()=>{
+  requestAnimationFrame(()=>{
+    const pct=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+    document.getElementById('pb').style.width=pct+'%';
+    nav.classList.toggle('sc',window.scrollY>60);
+    let cu='';['menu','gallery','events','reservation','contact'].forEach(id=>{const s=document.getElementById(id);if(s&&window.scrollY>=s.offsetTop-130)cu=id;});
+    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.s===cu));
+  });
 });
 
 // MOB MENU
-function tm(){
-  var hbg=document.getElementById('hbg'),mm=document.getElementById('mm');
+const tm = () => {
+  const hbg=document.getElementById('hbg'),mm=document.getElementById('mm');
   hbg.classList.toggle('o');mm.classList.toggle('o');
-  var open=hbg.classList.contains('o');
+  const open=hbg.classList.contains('o');
   hbg.setAttribute('aria-label',open?'Close menu':'Open menu');
   hbg.setAttribute('aria-expanded',open?'true':'false');
   mm.setAttribute('aria-hidden',open?'false':'true');
-}
-function cm(){
-  var hbg=document.getElementById('hbg'),mm=document.getElementById('mm');
+};
+const cm = () => {
+  const hbg=document.getElementById('hbg'),mm=document.getElementById('mm');
   hbg.classList.remove('o');mm.classList.remove('o');
   hbg.setAttribute('aria-label','Open menu');
   hbg.setAttribute('aria-expanded','false');
   mm.setAttribute('aria-hidden','true');
-}
+};
 
 // REVEAL
 const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:0,rootMargin:'0px 0px -20px 0px'});
@@ -840,7 +830,7 @@ document.querySelectorAll('.rv,.rl,.rr').forEach(el=>ro.observe(el));
 setTimeout(()=>{document.querySelectorAll('.rv,.rl,.rr').forEach(el=>el.classList.add('vis'));},2000);
 
 // MENU SWITCH — syncs both desktop + mobile tabs
-function sw(panel,btn,tid){
+const sw = (panel,btn,tid) => {
   document.querySelectorAll('.m-panel').forEach(p=>p.classList.remove('act'));
   // clear BOTH tab groups
   document.querySelectorAll('#dT button, #mT button').forEach(b=>b.classList.remove('act'));
@@ -850,37 +840,37 @@ function sw(panel,btn,tid){
   const idx=Array.from(btn.parentElement.children).indexOf(btn);
   const otherGroup=tid==='dT'?document.getElementById('mT'):document.getElementById('dT');
   if(otherGroup){const ob=otherGroup.querySelectorAll('button')[idx];if(ob)ob.classList.add('act');}
-}
+};
 
 // FORM
-function ns(f){
+const ns = (f) => {
   if(f===1){if(!document.getElementById('fn').value.trim()||!document.getElementById('fp').value.trim()||!document.getElementById('fd').value||!document.getElementById('ft').value){alert('Please fill in all fields.');return;}}
   if(f===2)bc();
   gs(f+1);
-}
-function ps(f){gs(f-1);}
-function gs(n){
+};
+const ps = (f) => {gs(f-1);};
+const gs = (n) => {
   document.querySelectorAll('.fs').forEach(s=>s.classList.remove('act'));
   document.getElementById('fs'+n).classList.add('act');
   [1,2,3].forEach(i=>{const el=document.getElementById('si'+i);el.classList.remove('a','d');if(i<n)el.classList.add('d');if(i===n)el.classList.add('a');});
-}
-function bc(){
+};
+const bc = () => {
   const n=document.getElementById('fn').value,p=document.getElementById('fp').value,d=document.getElementById('fd').value,t=document.getElementById('ft').value,g=document.getElementById('gg').value||'Not specified',o=document.getElementById('go').value||'Regular Dining',nt=document.getElementById('gn').value||'None';
-  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  const esc = (s) => {return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
   document.getElementById('conf').innerHTML=`<h4 style="margin-bottom:14px;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--dark)">Booking Summary</h4><div class="ir"><div class="ii">👤</div><div class="it"><strong>Name</strong>${esc(n)}</div></div><div class="ir"><div class="ii">📞</div><div class="it"><strong>Phone</strong>${esc(p)}</div></div><div class="ir"><div class="ii">📅</div><div class="it"><strong>Date & Time</strong>${esc(d)} at ${esc(t)}</div></div><div class="ir"><div class="ii">👥</div><div class="it"><strong>Guests</strong>${esc(g)}</div></div><div class="ir"><div class="ii">🎉</div><div class="it"><strong>Occasion</strong>${esc(o)}</div></div><div class="ir"><div class="ii">📝</div><div class="it"><strong>Notes</strong>${esc(nt)}</div></div>`;
-}
-function sub(){
+};
+const sub = () => {
   const n=document.getElementById('fn').value,p=document.getElementById('fp').value,d=document.getElementById('fd').value,t=document.getElementById('ft').value,g=document.getElementById('gg').value||'Not specified',o=document.getElementById('go').value||'Regular Dining',nt=document.getElementById('gn').value||'None';
   const msg=`Hello! I'd like to reserve a table at The Liquid Lounge.%0A%0A👤 *Name:* ${n}%0A📞 *Phone:* ${p}%0A📅 *Date:* ${d} at ${t}%0A👥 *Guests:* ${g}%0A🎉 *Occasion:* ${o}%0A📝 *Notes:* ${nt}`;
   window.open(`https://wa.me/917439133880?text=${encodeURIComponent(msg)}`,'_blank' , 'noopener,noreferrer');
   document.querySelectorAll('.fs').forEach(s=>s.classList.remove('act'));
   document.getElementById('sok').classList.add('show');
   [1,2,3].forEach(i=>document.getElementById('si'+i).classList.add('d'));
-}
-function vf(el,type){
+};
+const vf = (el,type) => {
   if(type==='n'){el.value.trim().length>1?el.classList.add('v'):el.classList.remove('v');}
   if(type==='p'){/^[0-9+\s\-]{7,15}$/.test(el.value.trim())?el.classList.add('v'):el.classList.remove('v');}
-}
+};
 </script>
 
 <div id="pwa-install-popup" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1208;border:1px solid #b8892a;color:#fff;padding:18px 28px;border-radius:14px;z-index:99999;text-align:center;font-family:inherit;box-shadow:0 6px 32px rgba(0,0,0,0.6);min-width:280px;">
@@ -892,10 +882,10 @@ function vf(el,type){
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
 (function(){
-  var deferredPrompt;
-  var popup=document.getElementById('pwa-install-popup');
-  var installBtn=document.getElementById('pwa-install-btn');
-  var dismissBtn=document.getElementById('pwa-dismiss-btn');
+  let deferredPrompt;
+  const popup=document.getElementById('pwa-install-popup');
+  const installBtn=document.getElementById('pwa-install-btn');
+  const dismissBtn=document.getElementById('pwa-dismiss-btn');
   window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault();
     deferredPrompt=e;
@@ -909,5 +899,29 @@ if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.s
   window.addEventListener('appinstalled',function(){popup.style.display='none';deferredPrompt=null;});
 })();
 </script>
+
+<!-- Google tag (gtag.js) -->
+<script defer src="https://www.googletagmanager.com/gtag/js?id=G-N7C8LZ5KX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N7C8LZ5KX8');
+</script>
+<!-- Meta Pixel Code -->
+<script>
+setTimeout(function(){
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1303788181629813');
+  fbq('track','PageView');
+}, 3000);
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1303788181629813&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
 </body>
 </html>
