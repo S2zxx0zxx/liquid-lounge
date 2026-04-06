@@ -214,10 +214,9 @@ const vf = (el, type) => {
   const closeTime = isWeekend ? 24 * 60 : 23 * 60;
   const isOpen = total >= openTime && total < closeTime;
 
-  // Update hours display
+  // Append open/closed badge next to hours
   const htd = document.getElementById('htd');
   if (htd) {
-    htd.textContent = isWeekend ? '10:00 AM – 12:00 AM' : '11:00 AM – 11:00 PM';
     const badge = document.createElement('span');
     badge.className = 'status-badge ' + (isOpen ? 'status-open' : 'status-closed');
     badge.textContent = isOpen ? 'Open Now' : 'Closed';
@@ -266,13 +265,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nlBtn && nlInp) {
     nlBtn.addEventListener('click', () => {
       const val = nlInp.value.trim();
-      if (!val) {
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      const isPhone = /^[+]?[0-9\s\-]{7,15}$/.test(val);
+      if (!val || (!isEmail && !isPhone)) {
         nlInp.style.borderColor = '#c85032';
         setTimeout(() => { nlInp.style.borderColor = ''; }, 2000);
         return;
       }
       const msg = `Hi! I\u2019d like to stay updated on offers and events at The Liquid Lounge.%0AContact: ${encodeURIComponent(val)}`;
-      track('newsletter_subscribe', { event_category: 'lead', event_label: val.includes('@') ? 'email' : 'phone' });
+      track('newsletter_subscribe', { event_category: 'lead', event_label: isEmail ? 'email' : 'phone' });
       window.open(`https://wa.me/917439133880?text=${msg}`, '_blank', 'noopener,noreferrer');
       nlBtn.textContent = 'Thanks! \u2713';
       nlBtn.style.background = 'var(--gold)';
@@ -285,15 +286,21 @@ document.addEventListener('DOMContentLoaded', () => {
 (function() {
   const marks = [25, 50, 75, 100];
   const tracked = new Set();
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY + window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    const pct = Math.round((scrolled / total) * 100);
-    marks.forEach(m => {
-      if (!tracked.has(m) && pct >= m) {
-        tracked.add(m);
-        track('scroll_depth', { event_category: 'engagement', event_label: m + '%', value: m });
-      }
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      const pct = Math.round((scrolled / total) * 100);
+      marks.forEach(m => {
+        if (!tracked.has(m) && pct >= m) {
+          tracked.add(m);
+          track('scroll_depth', { event_category: 'engagement', event_label: m + '%', value: m });
+        }
+      });
+      ticking = false;
     });
   }, { passive: true });
 })();
