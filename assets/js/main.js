@@ -590,3 +590,88 @@ if ('serviceWorker' in navigator) {
     initCarousel();
   }
 })();
+
+// ═══ DJ NIGHT COUNTDOWN ═══
+function updateDJCountdown() {
+  var now = new Date();
+  var day = now.getDay();
+  var daysUntilFri = (5 - day + 7) % 7 || 7;
+  var nextFri = new Date(now);
+  nextFri.setDate(now.getDate() + daysUntilFri);
+  nextFri.setHours(21, 0, 0, 0);
+  var diff = nextFri - now;
+  var days = Math.floor(diff / 86400000);
+  var hours = Math.floor((diff % 86400000) / 3600000);
+  var mins = Math.floor((diff % 3600000) / 60000);
+  var cd = document.getElementById('dj-countdown');
+  if (!cd) return;
+  document.getElementById('ec-d').textContent = days;
+  document.getElementById('ec-h').textContent = String(hours).padStart(2, '0');
+  document.getElementById('ec-m').textContent = String(mins).padStart(2, '0');
+}
+updateDJCountdown();
+setInterval(updateDJCountdown, 60000);
+
+// ═══ TONIGHT'S SPECIAL BADGES ═══
+(function() {
+  function initTonightBadges() {
+    var todayDay = new Date().getDay();
+    if (todayDay !== 5 && todayDay !== 6) return;
+    var panel = document.getElementById('panel-cocktails');
+    if (!panel) return;
+    var cards = panel.querySelectorAll('.m-card');
+    var badgeText = todayDay === 5 ? '🎉 DJ Night Special' : '🔥 Weekend Deal';
+    var count = 0;
+    for (var i = 0; i < cards.length && count < 4; i++) {
+      var bgs = cards[i].querySelector('.ct .bgs');
+      if (!bgs) continue;
+      if (bgs.querySelector('.b-tonight')) continue;
+      var badge = document.createElement('span');
+      badge.className = 'bdg b-tonight';
+      badge.textContent = badgeText;
+      bgs.appendChild(badge);
+      count++;
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTonightBadges);
+  } else {
+    initTonightBadges();
+  }
+})();
+
+// ═══ RESERVATION FORM LIVE PREVIEW ═══
+(function() {
+  function updateFormPreview() {
+    var n = document.getElementById('fn') ? document.getElementById('fn').value : '';
+    var d = document.getElementById('fd') ? document.getElementById('fd').value : '';
+    var t = document.getElementById('ft') ? document.getElementById('ft').value : '';
+    var fpText = document.getElementById('fp-text');
+    if (!fpText) return;
+    if (!n && !d) {
+      fpText.textContent = 'Fill in your details to see booking summary';
+      return;
+    }
+    var preview = '';
+    if (n) preview += '👤 ' + n;
+    if (d) {
+      var parsed = new Date(d);
+      if (!isNaN(parsed)) {
+        preview += '  📅 ' + parsed.toLocaleDateString('en-IN', {weekday: 'short', day: 'numeric', month: 'short'});
+      }
+    }
+    if (t) preview += '  🕗 ' + t;
+    fpText.textContent = preview || 'Fill in your details to see booking summary';
+  }
+  function initFormPreview() {
+    ['fn', 'fp', 'fd', 'ft'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateFormPreview);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFormPreview);
+  } else {
+    initFormPreview();
+  }
+})();
