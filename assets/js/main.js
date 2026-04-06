@@ -230,6 +230,17 @@ function vf(el, type) {
   if (type === 'n') { el.value.trim().length > 1 ? el.classList.add('v') : el.classList.remove('v'); }
   if (type === 'p') { /^[0-9+\s\-]{7,15}$/.test(el.value.trim()) ? el.classList.add('v') : el.classList.remove('v'); }
 }
+function sanitizeInput(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+// Note: the existing bc() function already uses esc() for
+// DOM injection. This sanitizeInput is available for future use.
 
 /* ── ANNOUNCEMENT BAR ────────────────────────────────────────────────────── */
 (function() {
@@ -691,4 +702,31 @@ setInterval(updateDJCountdown, 60000);
   } else {
     initFormPreview();
   }
+})();
+
+// ═══ COUNT-UP ANIMATION FOR STATS SECTION ═══
+(function() {
+  const statsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      const nums = entry.target.querySelectorAll('.s-num');
+      nums.forEach(function(el) {
+        const text = el.textContent.trim();
+        const match = text.match(/^(\d+)/);
+        if (!match) return;
+        const target = parseInt(match[1]);
+        const suffix = text.replace(/^\d+/, '');
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(function() {
+          current = Math.min(current + step, target);
+          el.textContent = current + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 40);
+      });
+      statsObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.5 });
+  const statsSection = document.querySelector('.stats');
+  if (statsSection) statsObserver.observe(statsSection);
 })();

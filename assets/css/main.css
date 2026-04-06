@@ -543,3 +543,53 @@ footer{background:var(--dark);padding:64px 60px 40px;}
 .fp-inner{display:flex;align-items:center;gap:10px;}
 .fp-icon{font-size:16px;flex-shrink:0;}
 .fp-text{font-size:13px;color:var(--text2);letter-spacing:0.5px;line-height:1.5;}
+
+/* ═══ MICRO-INTERACTIONS POLISH ═══ */
+
+/* Nav CTA button shimmer on hover */
+.nav-cta { overflow: hidden; position: relative; }
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent,
+    rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.5s;
+}
+.nav-cta:hover::after { left: 150%; }
+
+/* Menu card tap feedback on mobile */
+@media(max-width:960px) {
+  .m-card:active {
+    transform: scale(0.97);
+    transition: transform 0.1s;
+  }
+  .ev-card:active { transform: scale(0.98); }
+}
+
+/* Smooth page scroll enhancement */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Stats numbers count-up animation base */
+.s-num { transition: color 0.3s; }
+
+/* Gallery item cursor upgrade */
+.gi { cursor: zoom-in; }
+
+/* Button press effect */
+.bp:active, .bs:active, .bnx:active, .bsb:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Footer newsletter button upgrade */
+#nl-btn:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Accessibility: focus visible */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
