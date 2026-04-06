@@ -72,9 +72,11 @@ if (cur && curR) {
     el.addEventListener('mouseleave', () => curR.classList.remove('h'));
   });
   (function animateCursor() {
-    cur.style.transform = `translate(${mx - 4}px,${my - 4}px)`;
-    rx += (mx - 17 - rx) * 0.15;
-    ry += (my - 17 - ry) * 0.15;
+    // Offsets center the cursor dot (half of 8px) and ring (half of 34px) on the pointer
+    const DOT_HALF = 4, RING_HALF = 17;
+    cur.style.transform = `translate(${mx - DOT_HALF}px,${my - DOT_HALF}px)`;
+    rx += (mx - RING_HALF - rx) * 0.15;
+    ry += (my - RING_HALF - ry) * 0.15;
     curR.style.transform = `translate(${rx.toFixed(1)}px,${ry.toFixed(1)}px)`;
     requestAnimationFrame(animateCursor);
   })();
