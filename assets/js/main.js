@@ -65,9 +65,12 @@ const cur = document.getElementById('cur');
 const curR = document.getElementById('curR');
 if (cur && curR) {
   document.body.classList.add('js-cursor');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  document.querySelectorAll('a,button,.m-card,.ev-card,.gi').forEach(el => {
+  document.addEventListener('mousemove', e => {
+    cur.style.left = e.clientX + 'px';
+    cur.style.top = e.clientY + 'px';
+    setTimeout(() => { curR.style.left = e.clientX + 'px'; curR.style.top = e.clientY + 'px'; }, 90);
+  });
+  document.querySelectorAll('a,button,.m-card,.ev-card,.gi,.tm-card,.faq-q').forEach(el => {
     el.addEventListener('mouseenter', () => curR.classList.add('h'));
     el.addEventListener('mouseleave', () => curR.classList.remove('h'));
   });
@@ -113,12 +116,13 @@ window.addEventListener('scroll', () => {
     if (pb) pb.style.width = pct + '%';
     if (nav) nav.classList.toggle('sc', window.scrollY > 60);
     let cu = '';
-    sectionIds.forEach(id => {
-      if (sectionOffsets[id] !== undefined && window.scrollY >= sectionOffsets[id] - 130) cu = id;
+    ['menu','gallery','events','testimonials','faq','reservation','contact'].forEach(id => {
+      const s = document.getElementById(id);
+      if (s && window.scrollY >= s.offsetTop - 130) cu = id;
     });
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.s === cu));
   });
-});
+}, { passive: true });
 
 /* ── MOBILE MENU ─────────────────────────────────────────────────────────── */
 const tm = () => {
@@ -210,28 +214,122 @@ const vf = (el, type) => {
   if (type === 'p') { /^[0-9+\s\-]{7,15}$/.test(el.value.trim()) ? el.classList.add('v') : el.classList.remove('v'); }
 };
 
-/* ── EVENT TRACKING: CTA & Navigation clicks ─────────────────────────────── */
+/* ── ANNOUNCEMENT BAR ────────────────────────────────────────────────────── */
+(function() {
+  const bar = document.getElementById('ann-bar');
+  const cls = document.getElementById('ann-cls');
+  if (!bar || !cls) return;
+  try { if (sessionStorage.getItem('ann-dismissed')) { bar.style.display = 'none'; return; } } catch(e) {}
+  cls.addEventListener('click', () => {
+    bar.style.maxHeight = '0';
+    bar.style.padding = '0';
+    bar.style.borderBottomWidth = '0';
+    setTimeout(() => { bar.style.display = 'none'; }, 400);
+    try { sessionStorage.setItem('ann-dismissed', '1'); } catch(e) {}
+    track('announcement_dismissed', { event_category: 'engagement' });
+  });
+})();
+
+/* ── DYNAMIC OPEN / CLOSED STATUS ────────────────────────────────────────── */
+(function() {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun, 6=Sat
+  const isWeekend = (day === 0 || day === 6);
+  const total = now.getHours() * 60 + now.getMinutes();
+  const openTime  = isWeekend ? 10 * 60 : 11 * 60;
+  const closeTime = isWeekend ? 24 * 60 : 23 * 60;
+  const isOpen = total >= openTime && total < closeTime;
+
+  // Append open/closed badge next to hours
+  const htd = document.getElementById('htd');
+  if (htd) {
+    const badge = document.createElement('span');
+    badge.className = 'status-badge ' + (isOpen ? 'status-open' : 'status-closed');
+    badge.textContent = isOpen ? 'Open Now' : 'Closed';
+    htd.parentNode.appendChild(badge);
+  }
+})();
+
+/* ── FAQ ACCORDION ───────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  // Hero CTAs
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const ans = this.nextElementSibling;
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        if (b.nextElementSibling) b.nextElementSibling.classList.remove('open');
+      });
+      if (!isExpanded) {
+        this.setAttribute('aria-expanded', 'true');
+        ans.classList.add('open');
+        track('faq_opened', { event_category: 'engagement', event_label: this.textContent.trim().slice(0, 50) });
+      }
+    });
+  });
+
+  /* ── EVENT TRACKING: CTA & Navigation clicks ─────────────────────────── */
   document.querySelectorAll('.bp, .bs').forEach(btn => {
     btn.addEventListener('click', () => {
       track('cta_click', { event_category: 'engagement', event_label: btn.textContent.trim() });
     });
   });
-  // Nav Reserve button
   const navCta = document.querySelector('.nav-cta');
   if (navCta) navCta.addEventListener('click', () => track('nav_reserve_click', { event_category: 'engagement' }));
-  // Menu card views via IntersectionObserver
   const cardObs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { track('menu_item_view', { event_category: 'menu', event_label: e.target.querySelector('.cn')?.textContent || 'card' }); cardObs.unobserve(e.target); } });
   }, { threshold: 0.5 });
   document.querySelectorAll('.m-card').forEach(c => cardObs.observe(c));
-  // Floating buttons (event tracking inline in HTML, add tooltips here)
   const fabCall = document.getElementById('fab-call');
   const fabWa = document.getElementById('fab-wa');
   if (fabCall) fabCall.addEventListener('click', () => track('call_click', { event_category: 'engagement', event_label: 'fab' }));
   if (fabWa) fabWa.addEventListener('click', () => track('whatsapp_click', { event_category: 'engagement', event_label: 'fab' }));
+
+  /* ── NEWSLETTER LEAD CAPTURE ──────────────────────────────────────────── */
+  const nlBtn = document.getElementById('nl-btn');
+  const nlInp = document.getElementById('nl-inp');
+  if (nlBtn && nlInp) {
+    nlBtn.addEventListener('click', () => {
+      const val = nlInp.value.trim();
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      const isPhone = /^[+]?[0-9\s\-]{7,15}$/.test(val);
+      if (!val || (!isEmail && !isPhone)) {
+        nlInp.style.borderColor = '#c85032';
+        setTimeout(() => { nlInp.style.borderColor = ''; }, 2000);
+        return;
+      }
+      const msg = `Hi! I\u2019d like to stay updated on offers and events at The Liquid Lounge.%0AContact: ${encodeURIComponent(val)}`;
+      track('newsletter_subscribe', { event_category: 'lead', event_label: isEmail ? 'email' : 'phone' });
+      window.open(`https://wa.me/917439133880?text=${msg}`, '_blank', 'noopener,noreferrer');
+      nlBtn.textContent = 'Thanks! \u2713';
+      nlBtn.style.background = 'var(--gold)';
+      setTimeout(() => { nlBtn.textContent = 'Subscribe \u2192'; nlBtn.style.background = ''; nlInp.value = ''; }, 3000);
+    });
+  }
 });
+
+/* ── SCROLL DEPTH TRACKING ───────────────────────────────────────────────── */
+(function() {
+  const marks = [25, 50, 75, 100];
+  const tracked = new Set();
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      const pct = Math.round((scrolled / total) * 100);
+      marks.forEach(m => {
+        if (!tracked.has(m) && pct >= m) {
+          tracked.add(m);
+          track('scroll_depth', { event_category: 'engagement', event_label: m + '%', value: m });
+        }
+      });
+      ticking = false;
+    });
+  }, { passive: true });
+})();
 
 /* ── SERVICE WORKER REGISTRATION ─────────────────────────────────────────── */
 if ('serviceWorker' in navigator) {
