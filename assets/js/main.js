@@ -74,6 +74,15 @@ if (cur && curR) {
     el.addEventListener('mouseenter', () => curR.classList.add('h'));
     el.addEventListener('mouseleave', () => curR.classList.remove('h'));
   });
+  (function animateCursor() {
+    // Offsets center the cursor dot (half of 8px) and ring (half of 34px) on the pointer
+    const DOT_HALF = 4, RING_HALF = 17;
+    cur.style.transform = `translate(${mx - DOT_HALF}px,${my - DOT_HALF}px)`;
+    rx += (mx - RING_HALF - rx) * 0.15;
+    ry += (my - RING_HALF - ry) * 0.15;
+    curR.style.transform = `translate(${rx.toFixed(1)}px,${ry.toFixed(1)}px)`;
+    requestAnimationFrame(animateCursor);
+  })();
 }
 
 /* ── SCROLL: progress bar + nav highlight ───────────────────────────────── */
@@ -83,6 +92,23 @@ document.querySelectorAll('.fg select').forEach(function(sel) {
     this.classList.toggle('has-val', this.value !== '');
   });
 });
+
+/* Cache section offsets to avoid forced reflow on every scroll event */
+const sectionIds = ['menu','gallery','events','reservation','contact'];
+const sectionOffsets = {};
+function cacheOffsets() {
+  sectionIds.forEach(id => {
+    const s = document.getElementById(id);
+    if (s) sectionOffsets[id] = s.offsetTop;
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', cacheOffsets);
+} else {
+  cacheOffsets();
+}
+window.addEventListener('resize', cacheOffsets);
+
 window.addEventListener('scroll', () => {
   requestAnimationFrame(() => {
     const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
