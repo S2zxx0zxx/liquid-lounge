@@ -331,26 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 })();
 
-/* ── LAZY-LOAD CSS BACKGROUND IMAGES ─────────────────────────────────────── */
-(function() {
-  const bgObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const bg = el.getAttribute('data-bg');
-        if (bg) {
-          el.style.background = bg;
-          el.removeAttribute('data-bg');
-        }
-        bgObserver.unobserve(el);
-      }
-    });
-  }, { rootMargin: '200px 0px 200px 0px' });
-  document.querySelectorAll('[data-bg]').forEach(function(el) {
-    bgObserver.observe(el);
-  });
-})();
-
 /* ── SERVICE WORKER REGISTRATION ─────────────────────────────────────────── */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
