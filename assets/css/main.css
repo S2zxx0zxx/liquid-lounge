@@ -470,3 +470,10 @@ footer{background:var(--dark);padding:64px 60px 40px;}
   .ann-inner{flex-direction:column;gap:8px;padding:10px 16px;}
   .ann-txt{font-size:10px;}
 }
+
+/* MAP PLACEHOLDER */
+.map-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;height:100%;background:var(--bg);border:1.5px solid var(--glass-b);border-radius:var(--r);color:var(--dark);text-align:center;padding:32px 24px;}
+.map-placeholder p{font-size:13px;color:var(--text2);letter-spacing:.5px;line-height:1.6;max-width:260px;}
+.map-pin{font-size:36px;line-height:1;}
+.map-load-btn{background:var(--bg);color:var(--dark);border:1.5px solid var(--gold);border-radius:var(--rs);padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:1px;cursor:pointer;transition:background .25s,color .25s;}
+.map-load-btn:hover{background:var(--gold);color:var(--bg);}
