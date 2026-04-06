@@ -95,6 +95,23 @@ document.querySelectorAll('.fg select').forEach(function(sel) {
 
 /* Cache section offsets to avoid forced reflow on every scroll event */
 const sectionIds = ['menu','gallery','events','reservation','contact'];
+
+// Lazy-load Google Maps iframe on scroll
+(function() {
+  const mapBox = document.querySelector('.map-box');
+  if (!mapBox) return;
+  const mapObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) {
+      const iframe = mapBox.querySelector('iframe');
+      if (iframe && !iframe.src.includes('maps.google.com')) {
+        const lazySrc = iframe.dataset.src;
+        if (lazySrc) iframe.src = lazySrc;
+      }
+      mapObs.disconnect();
+    }
+  }, { threshold: 0.1 });
+  mapObs.observe(mapBox);
+})();
 const sectionOffsets = {};
 function cacheOffsets() {
   sectionIds.forEach(id => {
