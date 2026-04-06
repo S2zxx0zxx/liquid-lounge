@@ -462,3 +462,131 @@ if ('serviceWorker' in navigator) {
     if (count > 1) { count--; numEl.textContent = count; }
   }, 45000);
 })();
+
+/* ── GALLERY LIGHTBOX ──────────────────────────────────────────────────────── */
+(function() {
+  var galleryData = [];
+  var currentIndex = 0;
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCaption = document.getElementById('lb-caption');
+  var lbClose = document.getElementById('lb-close');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+
+  if (!lightbox) return;
+
+  document.querySelectorAll('.gi').forEach(function(gi, i) {
+    var gin = gi.querySelector('.g-in');
+    var lbl = gi.querySelector('.g-lbl');
+    var dataBg = gin ? (gin.getAttribute('data-bg') || '') : '';
+    var urlMatch = dataBg.match(/url\(['"]?([^'"()]+)['"]?\)/);
+    var imgUrl = urlMatch ? urlMatch[1] : '';
+    var label = lbl ? lbl.textContent.trim() : '';
+    galleryData.push({bg: imgUrl, label: label});
+    gi.style.cursor = 'pointer';
+    gi.addEventListener('click', function() { openLightbox(i); });
+  });
+
+  function openLightbox(index) {
+    currentIndex = index;
+    var item = galleryData[currentIndex];
+    lbImg.style.backgroundImage = item.bg ? 'url("' + item.bg + '")' : '';
+    lbCaption.textContent = item.label;
+    lightbox.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    track('gallery_lightbox_open', {event_label: item.label});
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+    var item = galleryData[currentIndex];
+    lbImg.style.backgroundImage = item.bg ? 'url("' + item.bg + '")' : '';
+    lbCaption.textContent = item.label;
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % galleryData.length;
+    var item = galleryData[currentIndex];
+    lbImg.style.backgroundImage = item.bg ? 'url("' + item.bg + '")' : '';
+    lbCaption.textContent = item.label;
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', function(e) { e.stopPropagation(); showPrev(); });
+  lbNext.addEventListener('click', function(e) { e.stopPropagation(); showNext(); });
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (!lightbox.classList.contains('show')) return;
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') showPrev();
+    else if (e.key === 'ArrowRight') showNext();
+  });
+})();
+
+/* ── TESTIMONIALS CAROUSEL ─────────────────────────────────────────────────── */
+(function() {
+  function initCarousel() {
+    if (window.innerWidth > 960) return;
+    var cards = document.querySelectorAll('.tm-grid .tm-card');
+    var carousel = document.getElementById('tm-carousel');
+    var dotsWrap = document.getElementById('tm-dots');
+    if (!carousel || !dotsWrap || !cards.length) return;
+
+    var clones = [];
+    var dots = [];
+    var currentTm = 0;
+    var timer = null;
+    var paused = false;
+
+    cards.forEach(function(card) {
+      var clone = card.cloneNode(true);
+      clone.classList.remove('rv', 'vis');
+      carousel.appendChild(clone);
+      clones.push(clone);
+
+      var dot = document.createElement('button');
+      dot.className = 'tm-dot';
+      dot.setAttribute('aria-label', 'Go to slide ' + (dots.length + 1));
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    });
+
+    function showTm(index) {
+      clones.forEach(function(c, i) { c.classList.toggle('active', i === index); });
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === index); });
+      currentTm = index;
+    }
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { showTm(i); });
+    });
+
+    showTm(0);
+
+    function startTimer() {
+      timer = setInterval(function() {
+        if (!paused) showTm((currentTm + 1) % clones.length);
+      }, 4000);
+    }
+
+    startTimer();
+
+    carousel.addEventListener('mouseenter', function() { paused = true; });
+    carousel.addEventListener('mouseleave', function() { paused = false; });
+    carousel.addEventListener('touchstart', function() { paused = true; }, {passive: true});
+    carousel.addEventListener('touchend', function() { paused = false; }, {passive: true});
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousel);
+  } else {
+    initCarousel();
+  }
+})();
