@@ -28,10 +28,13 @@ const APP_CONFIG = {
     metaPixelId: '1303788181629813',
   },
 
-  /* ── Payment Integration Hooks (fill in when going live) ────────────── */
+  /* ── Payment Integration Hooks ──────────────────────────────────────── */
+  /* ⚠️  IMPORTANT: Never commit real API keys here.
+         Use environment variables or a secrets manager in production.
+         Uncomment and populate ONLY after setting up your payment provider. */
   payment: {
-    // razorpay: { keyId: 'rzp_live_XXXX' },
-    // stripe:   { publishableKey: 'pk_live_XXXX' },
+    // razorpay: { keyId: process.env.RAZORPAY_KEY_ID },
+    // stripe:   { publishableKey: process.env.STRIPE_PUBLISHABLE_KEY },
   },
 
   /* ── Backend API Base URL (Node.js / Firebase) ─────────────────────── */

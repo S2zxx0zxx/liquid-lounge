@@ -3,6 +3,5 @@ Allow: /
 
 Sitemap: https://theliquidlounge.in/sitemap.xml
 
-# Disallow sensitive or non-indexable paths
+# Disallow non-indexable configuration paths
 Disallow: /config/
-Disallow: /assets/js/
