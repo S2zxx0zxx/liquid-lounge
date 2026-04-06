@@ -370,3 +370,67 @@ if ('serviceWorker' in navigator) {
     track('pwa_installed', { event_category: 'pwa' });
   });
 })();
+
+/* ── EXIT INTENT POPUP ───────────────────────────────────────────────────── */
+(function() {
+  var popup = document.getElementById('exit-popup');
+  var closeBtn = document.getElementById('exit-close');
+  var laterBtn = document.getElementById('exit-later');
+  var ctaBtn = document.getElementById('exit-cta');
+  if (!popup) return;
+
+  var shown = false;
+  var pageLoadTime = Date.now();
+
+  function showPopup() {
+    if (shown || sessionStorage.getItem('exit-shown')) return;
+    shown = true;
+    popup.classList.add('show');
+    track('exit_popup_shown', { event_category: 'engagement' });
+  }
+
+  function closePopup() {
+    popup.classList.remove('show');
+    sessionStorage.setItem('exit-shown', '1');
+  }
+
+  closeBtn.addEventListener('click', closePopup);
+  laterBtn.addEventListener('click', closePopup);
+  popup.addEventListener('click', function(e) { if (e.target === popup) closePopup(); });
+  if (ctaBtn) ctaBtn.addEventListener('click', function() {
+    track('exit_popup_cta_click', { event_category: 'conversion' });
+  });
+
+  // Desktop: mouse leaving top of page after 15s
+  var isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 960;
+  if (!isMobile) {
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY < 10 && (Date.now() - pageLoadTime) >= 15000) showPopup();
+    });
+  } else {
+    // Mobile: scrolled 80% then scrolled back up 200px from maximum
+    var maxScroll = 0;
+    var triggered80 = false;
+    window.addEventListener('scroll', function() {
+      var scrolled = window.scrollY + window.innerHeight;
+      var total = document.documentElement.scrollHeight;
+      var pct = scrolled / total * 100;
+      if (pct >= 80) {
+        triggered80 = true;
+        if (window.scrollY > maxScroll) maxScroll = window.scrollY;
+      }
+      if (triggered80 && maxScroll > 0 && (maxScroll - window.scrollY) >= 200) showPopup();
+    }, { passive: true });
+  }
+})();
+
+/* ── SCARCITY BAR ────────────────────────────────────────────────────────── */
+(function() {
+  var numEl = document.getElementById('scar-num');
+  if (!numEl) return;
+  var count = Math.floor(Math.random() * 5) + 2; // 2-6
+  numEl.textContent = count;
+  setInterval(function() {
+    if (count > 1) { count--; numEl.textContent = count; }
+  }, 45000);
+})();
