@@ -331,6 +331,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 })();
 
+/* ── MAP CLICK-TO-LOAD ───────────────────────────────────────────────────── */
+function loadMap(btn) {
+  var box = btn.closest('.map-box');
+  if (!box) return;
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://maps.google.com/maps?q=9FW7%2BJCM+Khalpar+Road+Tegachhi+Mamudpur+West+Bengal&z=15&output=embed';
+  iframe.width = '100%';
+  iframe.height = '100%';
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.title = 'The Liquid Lounge Location \u2014 Khalpar Road, Tegachhi Mamudpur, West Bengal';
+  iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+  box.replaceChildren(iframe);
+}
+
+/* ── GALLERY BACKGROUND LAZY LOAD ────────────────────────────────────────── */
+(function() {
+  const bgObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.dataset.bg) {
+        e.target.style.background = e.target.dataset.bg;
+        bgObs.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '100px' });
+  document.querySelectorAll('.g-in[data-bg]').forEach(el => bgObs.observe(el));
+})();
+
 /* ── SERVICE WORKER REGISTRATION ─────────────────────────────────────────── */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
