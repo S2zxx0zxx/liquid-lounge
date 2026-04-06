@@ -12,8 +12,8 @@ const APP_CONFIG = {
   phone: '+917439133880',
   whatsapp: '917439133880',
   email: 'hello@theliquidlounge.in',
-  address: 'NH-30, Arrah–Sasaram Road, Buxar, Bihar 802101, India',
-  mapUrl: 'https://maps.google.com/?q=The+Liquid+Lounge+Buxar+Bihar',
+  address: '9FW7+JCM, Khalpar Road, Tegachhi Mamudpur, West Bengal, India',
+  mapUrl: 'https://goo.gl/maps/SNXUAFCowAMQ7y1z7',
   website: 'https://theliquidlounge.in',
 
   /* ── Operating Hours ────────────────────────────────────────────────── */
