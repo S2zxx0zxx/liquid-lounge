@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theliquidlounge.in/sitemap.xml
+
+# Disallow non-indexable configuration paths
+Disallow: /config/
