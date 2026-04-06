@@ -65,15 +65,19 @@ const cur = document.getElementById('cur');
 const curR = document.getElementById('curR');
 if (cur && curR) {
   document.body.classList.add('js-cursor');
-  document.addEventListener('mousemove', e => {
-    cur.style.left = e.clientX + 'px';
-    cur.style.top = e.clientY + 'px';
-    setTimeout(() => { curR.style.left = e.clientX + 'px'; curR.style.top = e.clientY + 'px'; }, 90);
-  });
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
   document.querySelectorAll('a,button,.m-card,.ev-card,.gi').forEach(el => {
     el.addEventListener('mouseenter', () => curR.classList.add('h'));
     el.addEventListener('mouseleave', () => curR.classList.remove('h'));
   });
+  (function animateCursor() {
+    cur.style.transform = `translate(${mx - 4}px,${my - 4}px)`;
+    rx += (mx - 17 - rx) * 0.15;
+    ry += (my - 17 - ry) * 0.15;
+    curR.style.transform = `translate(${rx.toFixed(1)}px,${ry.toFixed(1)}px)`;
+    requestAnimationFrame(animateCursor);
+  })();
 }
 
 /* ── SCROLL: progress bar + nav highlight ───────────────────────────────── */
@@ -83,6 +87,23 @@ document.querySelectorAll('.fg select').forEach(function(sel) {
     this.classList.toggle('has-val', this.value !== '');
   });
 });
+
+/* Cache section offsets to avoid forced reflow on every scroll event */
+const sectionIds = ['menu','gallery','events','reservation','contact'];
+const sectionOffsets = {};
+function cacheOffsets() {
+  sectionIds.forEach(id => {
+    const s = document.getElementById(id);
+    if (s) sectionOffsets[id] = s.offsetTop;
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', cacheOffsets);
+} else {
+  cacheOffsets();
+}
+window.addEventListener('resize', cacheOffsets);
+
 window.addEventListener('scroll', () => {
   requestAnimationFrame(() => {
     const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
@@ -90,9 +111,8 @@ window.addEventListener('scroll', () => {
     if (pb) pb.style.width = pct + '%';
     if (nav) nav.classList.toggle('sc', window.scrollY > 60);
     let cu = '';
-    ['menu','gallery','events','reservation','contact'].forEach(id => {
-      const s = document.getElementById(id);
-      if (s && window.scrollY >= s.offsetTop - 130) cu = id;
+    sectionIds.forEach(id => {
+      if (sectionOffsets[id] !== undefined && window.scrollY >= sectionOffsets[id] - 130) cu = id;
     });
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.s === cu));
   });

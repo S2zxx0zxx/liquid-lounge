@@ -7,7 +7,7 @@
      • 3rd-party     → Stale-while-revalidate (fonts, analytics CDNs)
    ========================================================================== */
 
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_STATIC  = `ll-static-${CACHE_VERSION}`;
 const CACHE_PAGES   = `ll-pages-${CACHE_VERSION}`;
 const CACHE_FONTS   = `ll-fonts-${CACHE_VERSION}`;
@@ -22,6 +22,15 @@ const STATIC_ASSETS = [
   '/config/app.js',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
+  '/assets/images/logo.svg',
+  '/assets/images/hero-bg.webp',
+  '/assets/images/gallery-1.webp',
+  '/assets/images/gallery-2.webp',
+  '/assets/images/gallery-3.webp',
+  '/assets/images/gallery-4.webp',
+  '/assets/images/gallery-5.webp',
+  '/assets/images/gallery-6.webp',
+  '/assets/images/gallery-7.webp',
 ];
 
 /* ── Install: pre-cache static shell ────────────────────────────────────── */
