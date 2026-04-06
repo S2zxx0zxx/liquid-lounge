@@ -339,8 +339,8 @@ function loadMap(btn) {
   iframe.src = 'https://maps.google.com/maps?q=9FW7%2BJCM+Khalpar+Road+Tegachhi+Mamudpur+West+Bengal&z=15&output=embed';
   iframe.width = '100%';
   iframe.height = '100%';
-  iframe.frameBorder = '0';
-  iframe.allowFullscreen = true;
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', '');
   iframe.title = 'The Liquid Lounge Location \u2014 Khalpar Road, Tegachhi Mamudpur, West Bengal';
   iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
   box.replaceChildren(iframe);
